@@ -1,3 +1,5 @@
+ --Stage 3
+ 
  SELECT 
     ie.icustay_id, ie.hadm_id, ie.los_icu, ie.hospital_expire_flag, ie.admission_type, ie.ethnicity, ie.age, ie.los_hospital, ie.gender, 
     hw.height_first, hw.weight_first,
