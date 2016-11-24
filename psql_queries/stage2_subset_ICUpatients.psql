@@ -1,3 +1,4 @@
+-- Stage 2
 -- copying icustay_detail to csv to subset in R by conditions 
 -- need these details to subset patients by age and first ICU stay
 
