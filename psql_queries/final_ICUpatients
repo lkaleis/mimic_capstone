@@ -1,0 +1,46 @@
+ SELECT 
+    ie.icustay_id, ie.hadm_id, ie.los_icu, ie.hospital_expire_flag, ie.admission_type, ie.ethnicity, ie.age, ie.los_hospital, ie.gender, 
+    hw.height_first, hw.weight_first,
+    vi.heartrate_mean, vi.sysbp_mean, vi.diasbp_mean, vi.meanbp_mean, vi.resprate_mean, vi.tempc_mean, vi.spo2_mean, vi.glucose_mean,
+    ss.sofa, ss.saps, ss.oasis,
+    vf.mechvent,
+    u.urineoutput,
+    gcs.mingcs,
+    l.albumin_max, l.bicarbonate_max, l.bilirubin_max, l.creatinine_max, l.chloride_max, l.hematocrit_max, l.hemoglobin_max, 
+    l.lactate_max, l.platelet_max, l.potassium_max, l.sodium_max, l.bun_max, l.wbc_max
+   FROM icustay_detail ie,
+    heightweight hw,
+    vitalsfirstday vi,
+    severityscores ss,
+    ventfirstday vf,
+    uofirstday u,
+    gcsfirstday gcs,
+    labsfirstday l
+  WHERE ie.icustay_id = hw.icustay_id 
+  AND hw.icustay_id = vi.icustay_id 
+  AND vi.icustay_id = ss.icustay_id 
+  AND ss.icustay_id = vf.icustay_id 
+  AND vf.icustay_id = u.icustay_id 
+  AND u.icustay_id = gcs.icustay_id 
+  AND gcs.icustay_id = l.icustay_id 
+  AND vi.heartrate_mean IS NOT NULL 
+  AND vi.sysbp_mean IS NOT NULL 
+  AND vi.diasbp_mean IS NOT NULL 
+  AND vi.meanbp_mean IS NOT NULL 
+  AND vi.resprate_mean IS NOT NULL 
+  AND vi.tempc_mean IS NOT NULL 
+  AND vi.spo2_mean IS NOT NULL 
+  AND vi.glucose_mean IS NOT NULL 
+  AND l.albumin_max IS NOT NULL 
+  AND l.bicarbonate_max IS NOT NULL
+  AND l.bilirubin_max IS NOT NULL 
+  AND l.creatinine_max IS NOT NULL 
+  AND l.chloride_max IS NOT NULL 
+  AND l.hematocrit_max IS NOT NULL 
+  AND l.hemoglobin_max IS NOT NULL 
+  AND l.lactate_max IS NOT NULL 
+  AND l.platelet_max IS NOT NULL 
+  AND l.potassium_max IS NOT NULL 
+  AND l.sodium_max IS NOT NULL 
+  AND l.bun_max IS NOT NULL 
+  AND l.wbc_max IS NOT NULL;
