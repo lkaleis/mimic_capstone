@@ -1,1 +1,3 @@
+--Stage 3: final icupatient csv file which will have all predictor variables
+
 \copy (select * from icupatients) to 'D:/file_directory' csv delimiter ',' header null ''  
