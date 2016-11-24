@@ -1,0 +1,10 @@
+ CREATE MATERIALIZED VIEW severityscores as
+ SELECT sofa.icustay_id,
+    sofa.sofa,
+    saps.saps,
+    oasis.oasis
+   FROM sofa sofa,
+    saps saps,
+    oasis oasis
+  WHERE sofa.icustay_id = saps.icustay_id AND saps.icustay_id = oasis.icustay_id
+  GROUP BY sofa.icustay_id, sofa.sofa, saps.saps, oasis.oasis;
