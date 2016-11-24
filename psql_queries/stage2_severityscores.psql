@@ -1,3 +1,4 @@
+ -- Stage 2
  CREATE MATERIALIZED VIEW severityscores as
  SELECT sofa.icustay_id,
     sofa.sofa,
