@@ -1,0 +1,1 @@
+\copy (select * from icupatients) to 'D:/file_directory' csv delimiter ',' header null ''  
