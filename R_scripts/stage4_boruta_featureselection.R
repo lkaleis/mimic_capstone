@@ -5,6 +5,11 @@ install.packages("Boruta")
 library(ROCR)
 library(Boruta)
 
+#remove hemoglobin, meanbp_mean, and chloride_max due to high correlations
+icustays1 <- icustays1[,c(-12,-24,-26)]
+#remove ID attributes
+icustays1 <- icustays1[,c(-1,-2)]
+
 #Boruta feature selection on training set
 traindata_idx <- sample(nrow(icustays1), floor(nrow(icustays1)*0.70))
 #there are 5147 records in training set
