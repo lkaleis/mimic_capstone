@@ -1,4 +1,9 @@
-#Stage 4
+#Stage 4 Feature Selection using all base variables
+
+install.packages("ROCR")
+install.packages("Boruta")
+library(ROCR)
+library(Boruta)
 
 #Boruta feature selection on training set
 traindata_idx <- sample(nrow(icustays1), floor(nrow(icustays1)*0.70))
