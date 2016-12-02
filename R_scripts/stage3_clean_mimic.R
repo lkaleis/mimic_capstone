@@ -16,6 +16,10 @@ str(icustays)
 #for age above 89, set to '90'
 icustays$age[icustays$age>90] <- 90
 
+# icustays$age <- cut(icustays$age, breaks = c(18, 20, 30, 40, 50, 60, 70, 80, 90),
+#                    labels = c("under 20", "20-30", "30-40", "40-50", "50-60", "60-70", "70-80", "over 80"),
+#                    right = TRUE)
+
 #find all missing values
 icustays[icustays == ""] <- NA
 sapply(icustays, function(x) sum(is.na(x)))
@@ -54,15 +58,22 @@ for (i in 1:25) {
 
 #histograms for severity scores
 #SOFA SCORE
-par(mfrow=c(1,3))
+par(mfrow=c(1,2))
 hist(icustays[,17], main="SOFA Score", col="gray", border="white")
 hist(icustays[,18], main="SAPS Score", col="gray", border="white")
-hist(icustays[,19], main="SAPS Score", col="gray", border="white")
+#hist(icustays[,19], main="OASIS Score", col="gray", border="white")
 
 #pie chart for admission types
 ggplot(icustays, aes(x=factor(1), fill=admission_type))+
   geom_bar(width = 1)+
-  coord_polar("y")
+  coord_polar("y") + ggtitle("Patient Admission Types")
+
+#pie chart for mortality outcomes
+icustays_mort <- icustays
+icustays_mort$hospital_expire_flag <- factor(icustays_mort$hospital_expire_flag)
+ggplot(icustays_mort, aes(x=factor(1), fill=hospital_expire_flag))+
+  geom_bar(width = 1)+
+  coord_polar("y") + ggtitle("Patient Outcomes")
 
 #correlation matrix to show correlation between numerical attributes other than hospital_expiry_flag and
 #categorical attributes
@@ -71,50 +82,3 @@ corrplot(cor_matrix, type ="lower", order="hclust", tl.col="black", tl.srt=27)
 corrplot(cor_matrix, type="lower", order="hclust", tl.col="black", tl.srt=27, method = "number", number.cex=0.7)
 
 #features will be removed in Stage 4 scripts
-#END
-
-
-
-#Not using this code, but maybe for future
-
-# # mat : is a matrix of data
-# # ... : further arguments to pass to the native R cor.test function
-# cor.mtest <- function(mat, ...) {
-#   mat <- as.matrix(mat)
-#   n <- ncol(mat)
-#   p.mat<- matrix(NA, n, n)
-#   diag(p.mat) <- 0
-#   for (i in 1:(n - 1)) {
-#     for (j in (i + 1):n) {
-#       tmp <- cor.test(mat[, i], mat[, j], ...)
-#       p.mat[i, j] <- p.mat[j, i] <- tmp$p.value
-#     }
-#   }
-#   colnames(p.mat) <- rownames(p.mat) <- colnames(mat)
-#   p.mat
-# }
-# # matrix of the p-value of the correlation
-# p.mat <- cor.mtest(icustays1[,c(6,8:16,18:32)])
-# head(p.mat[, 1:5])
-# 
-# col <- colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))
-# corrplot(cor_matrix, method="color", col=col(200),number.cex=0.5,type="upper", order="hclust", addCoef.col = "black", # Add coefficient of correlation
-#          tl.col="black", tl.srt=45, #Text label color and rotation
-#          # Combine with significance
-#          p.mat = p.mat, sig.level = 0.01, insig = "blank", 
-#          # hide correlation coefficient on the principal diagonal
-#          diag=FALSE 
-# )
-
-# #remove highly correlated features 
-# install.packages("mlbench")
-# install.packages("caret")
-# library(caret)
-# set.seed(7)
-# corrmatrix <- cor(icustays1[,c(6,8:16,18:32)])
-# print(corrmatrix)
-# corrplot(corrmatrix, method="number", p.mat=p.mat, sig.level = 0.5, type="upper", order="hclust", tl.col="black")
-# highcorr <- findCorrelation(corrmatrix, cutoff=0.75)
-# print(highcorr)
-
-
