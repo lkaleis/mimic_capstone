@@ -56,5 +56,4 @@ boruta.df <- attStats(final.boruta)
 print(boruta.df)
 
 #remove gender and ethnicity because Boruta rejected them
-traindata <- traindata[,c(-3,-5)]
-testdata <- testdata[,c(-3,-5)]
+icustays1 <- icustays1[,c(-3,-5)]
